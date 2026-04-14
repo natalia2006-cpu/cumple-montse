@@ -7,14 +7,16 @@
 <style>
     body {
         margin: 0;
+        padding: 0;
         overflow: hidden;
         background: #0d0d0d;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        justify-content: center; /* Centra el contenido verticalmente */
         align-items: center;
         height: 100vh;
         width: 100vw;
-        font-family: sans-serif;
+        font-family: 'Arial', sans-serif;
         touch-action: none;
     }
     canvas {
@@ -24,36 +26,39 @@
         height: 100%;
         top: 0;
         left: 0;
+        z-index: 1;
     }
     .mensaje {
-        position: absolute;
-        top: 12%; /* Un poco más arriba */
+        position: relative; /* Cambiado a relativo para que fluya en el centro */
         z-index: 2;
         color: #968fff;
-        font-size: 1.4rem; 
+        font-size: 1.8rem; 
         text-align: center;
         width: 90%;
         font-weight: bold;
-        text-shadow: 0 0 10px #843bc8;
+        text-shadow: 0 0 15px #843bc8;
         opacity: 0;
         animation: aparecer 3s ease-in forwards;
         pointer-events: none;
+        margin-bottom: 20px; /* Separación de la flor */
     }
     #btn-dedicatoria {
         position: absolute;
-        bottom: 15%; /* Subimos el botón para que no esté pegado al borde inferior */
+        bottom: 10%;
         z-index: 3;
-        padding: 10px 25px;
+        padding: 12px 30px;
         background: transparent;
         color: #968fff;
         border: 2px solid #968fff;
         border-radius: 50px;
-        font-size: 0.9rem;
+        font-size: 1rem;
+        font-weight: bold;
         opacity: 0;
         animation: aparecer 2s ease-in forwards;
         animation-delay: 4s;
         cursor: pointer;
     }
+    /* Estilos del Modal (Igual que antes) */
     .modal {
         display: none;
         position: fixed;
@@ -66,14 +71,14 @@
     }
     .modal-content {
         background: #151515;
-        padding: 25px;
+        padding: 30px;
         border: 1px solid #968fff;
-        border-radius: 20px;
+        border-radius: 25px;
         width: 80%;
         color: #f3e8ff;
         text-align: center;
     }
-    @keyframes aparecer { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes aparecer { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 </style>
 </head>
 <body>
@@ -85,8 +90,17 @@
 <div id="miModal" class="modal">
     <div class="modal-content">
         <h2 style="color: #968fff;">Para Montse 🌸</h2>
-        <p>Tranquila, no me voy a poner muy cursie jajajaja.<br><br>Te quería agradecer por hacerme sentir agusto en la oficina. ¡Feliz cumpleaños!</p>
-        <button onclick="document.getElementById('miModal').style.display='none'" style="background:none; border:none; color:#968fff; margin-top:20px; font-weight:bold;">Cerrar</button>
+        <p>Tranquila, no me voy a poner muy cursie jajajaja.<br><br>
+            Te quería hacer este detalle a parte de felicitarte por tu cumpleaños, 
+            para agradecerte todos estos días atrás en los que en la oficina me ofrecías cosas 
+            y me ayudabas a estar más agusto allí (soy muy vergonzosa jajajaj) y aunque hubera veces en
+            las que estaba concentrada o aburrida siempre me decías cosillas y me alegraba mucho. 
+              Asique nada, no me enrollo más y... 
+                ¡Feliz cumpleaños! (Un poco atrasado jajajaj)</p>
+         <p style="margin-top: 40px; font-size: 1rem; font-style: italic; color: #cc54fc;">
+                Espero que te guste
+         </p>
+        <button onclick="document.getElementById('miModal').style.display='none'" style="background:none; border:none; color:#968fff; margin-top:20px; font-weight:bold; font-size: 1.1rem;">Cerrar</button>
     </div>
 </div>
 
@@ -105,11 +119,11 @@ const particles = [];
 
 function getFlowerPoint(t) {
     const k = 4;
-    const pulse = Math.sin(Date.now() * 0.003) * 0.1;
+    const pulse = Math.sin(Date.now() * 0.003) * 0.12;
     
-    // 🔥 FACTOR DE TAMAÑO ULTRA SEGURO:
-    // Reducimos al 20% del ancho para que sobre mucho espacio
-    const baseSize = Math.min(window.innerWidth, window.innerHeight) * 0.20;
+    // 🔥 TAMAÑO EQUILIBRADO:
+    // 0.38 es el punto dulce para que se vea grande pero no se corte
+    const baseSize = Math.min(window.innerWidth, window.innerHeight) * 0.38;
     
     const r = baseSize * Math.sin(k * t) * (1 + pulse);
     return { x: r * Math.cos(t), y: r * Math.sin(t) };
@@ -120,17 +134,16 @@ class Particle {
         this.t = Math.random() * Math.PI * 2;
         this.x = window.innerWidth / 2;
         this.y = window.innerHeight / 2;
-        this.size = Math.random() * 1.2 + 0.3; // Puntos más finos
-        this.speed = Math.random() * 0.02 + 0.01;
-        this.color = `hsl(${Math.random() * 40 + 260}, 80%, 70%)`;
+        this.size = Math.random() * 2 + 0.5; // Partículas un poco más visibles
+        this.speed = Math.random() * 0.015 + 0.005;
+        this.color = `hsl(${Math.random() * 40 + 260}, 85%, 75%)`;
     }
     update() {
         const target = getFlowerPoint(this.t);
-        // 🔥 CENTRO AJUSTADO:
-        // Colocamos el centro un pelín más arriba del centro real (0.45 en vez de 0.5)
-        // para que los pétalos de abajo no choquen con el menú del iPhone
+        // 🔥 CENTRO PERFECTO:
+        // La centramos totalmente para que el texto y ella bailen juntos
         this.x += (window.innerWidth * 0.5 + target.x - this.x) * this.speed;
-        this.y += (window.innerHeight * 0.45 + target.y - this.y) * this.speed;
+        this.y += (window.innerHeight * 0.55 + target.y - this.y) * this.speed;
     }
     draw() {
         ctx.fillStyle = this.color;
@@ -140,11 +153,10 @@ class Particle {
     }
 }
 
-// Menos partículas para que el iPhone no se sature
-for (let i = 0; i < 500; i++) particles.push(new Particle());
+for (let i = 0; i < 700; i++) particles.push(new Particle());
 
 function animate() {
-    ctx.fillStyle = 'rgba(13, 13, 13, 0.2)';
+    ctx.fillStyle = 'rgba(13, 13, 13, 0.18)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     particles.forEach(p => { p.update(); p.draw(); });
     requestAnimationFrame(animate);

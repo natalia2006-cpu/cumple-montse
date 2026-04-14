@@ -2,131 +2,78 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>¡Felicidades Montse! 🌸</title>
-
 <style>
-body {
-    margin: 0;
-    overflow: hidden;
-    background: #0d0d0d;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    height: -webkit-fill-available; /* Ajuste para iOS */
-    font-family: 'Arial', sans-serif;
-    touch-action: none;
-}
-
-canvas {
-    display: block;
-    position: absolute;
-    z-index: 1;
-    /* Ajuste para asegurar visibilidad total y escalado */
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-}
-
-.mensaje {
-    position: absolute;
-    z-index: 2;
-    color: #968fff; 
-    font-size: 2.5rem;
-    text-align: center;
-    font-weight: bold;
-    text-shadow: 0 0 15px #804db4, 0 0 30px #843bc8; 
-    opacity: 0;
-    animation: aparecer 3s ease-in forwards;
-    animation-delay: 1.5s;
-    pointer-events: none;
-    width: 90%;
-}
-
-/* Botón */
-#btn-dedicatoria {
-    position: absolute;
-    bottom: 12%;
-    z-index: 3;
-    padding: 12px 28px;
-    background: transparent;
-    color: #968fff;
-    border: 2px solid #968fff;
-    border-radius: 50px;
-    font-size: 1rem;
-    font-weight: bold;
-    opacity: 0;
-    animation: aparecerBoton 2s ease-in forwards;
-    animation-delay: 6s;
-    cursor: pointer;
-}
-
-/* Modal */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 100;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    backdrop-filter: blur(8px);
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background: #151515;
-    padding: 40px;
-    border: 1px solid #968fff;
-    border-radius: 25px;
-    width: 85%;
-    max-width: 450px;
-    text-align: center;
-    color: #f3e8ff;
-}
-
-.cerrar {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    color: #968fff;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-/* 🔥 AJUSTES PARA MÓVILES (Media Query) 🔥 */
-/* Estos cambios son cruciales para que se vea igual que en tu captura */
-@media (max-width: 600px) {
+    body {
+        margin: 0;
+        overflow: hidden;
+        background: #0d0d0d;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+        font-family: sans-serif;
+        touch-action: none;
+    }
+    canvas {
+        display: block;
+        position: absolute;
+        width: 100% !important;
+        height: 100% !important;
+    }
     .mensaje {
-        font-size: 1.6rem; /* Texto más pequeño */
-        top: 18%; /* Posición más alta para dejar espacio a la flor */
-        transform: translateY(0);
+        position: absolute;
+        top: 15%;
+        z-index: 2;
+        color: #968fff;
+        font-size: 1.5rem; /* Forzado pequeño para móvil */
+        text-align: center;
+        width: 90%;
+        font-weight: bold;
+        text-shadow: 0 0 10px #843bc8;
+        opacity: 0;
+        animation: aparecer 3s ease-in forwards;
+        pointer-events: none;
     }
     #btn-dedicatoria {
-        bottom: 8%; /* Botón más abajo */
+        position: absolute;
+        bottom: 10%;
+        z-index: 3;
+        padding: 10px 25px;
+        background: transparent;
+        color: #968fff;
+        border: 2px solid #968fff;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        opacity: 0;
+        animation: aparecer 2s ease-in forwards;
+        animation-delay: 4s;
+        cursor: pointer;
     }
-}
-
-/* Animaciones */
-@keyframes aparecer {
-    from { opacity: 0; transform: translateY(20px) scale(0.9); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-@keyframes aparecerBoton {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 100;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.9);
+        backdrop-filter: blur(8px);
+        justify-content: center;
+        align-items: center;
+    }
+    .modal-content {
+        background: #151515;
+        padding: 25px;
+        border: 1px solid #968fff;
+        border-radius: 20px;
+        width: 80%;
+        color: #f3e8ff;
+        text-align: center;
+    }
+    @keyframes aparecer { from { opacity: 0; } to { opacity: 1; } }
 </style>
 </head>
-
 <body>
 
 <div class="mensaje">¡Muchas felicidades Montse!</div>
@@ -135,20 +82,9 @@ canvas {
 
 <div id="miModal" class="modal">
     <div class="modal-content">
-        <span class="cerrar" id="closeModal">&times;</span>
         <h2 style="color: #968fff;">Para Montse 🌸</h2>
-        <p>
-            Tranquila, no me voy a poner muy cursie jajajaja.<br><br>
-            Te quería hacer este detalle a parte de felicitarte por tu cumpleaños, 
-            para agradecerte todos estos días atrás en los que en la oficina me ofrecías cosas 
-            y me ayudabas a estar más agusto allí (soy muy vergonzosa jajajaj) y aunque hubera veces en
-            las que estaba concentrada o aburrida siempre me decías cosillas y me alegraba mucho. 
-              Asique nada, no me enrollo más y... 
-                ¡Feliz cumpleaños! (Un poco atrasado jajajaj)
-            </p>
-            <p style="margin-top: 40px; font-size: 1rem; font-style: italic; color: #cc54fc;">
-                Espero que te guste
-            </p>
+        <p>Tranquila, no me voy a poner muy cursie jajajaja.<br><br>Te quería agradecer por hacerme sentir agusto en la oficina. ¡Feliz cumpleaños!</p>
+        <button onclick="document.getElementById('miModal').style.display='none'" style="background:none; border:none; color:#968fff; margin-top:20px;">Cerrar</button>
     </div>
 </div>
 
@@ -157,57 +93,39 @@ const canvas = document.getElementById('flower');
 const ctx = canvas.getContext('2d');
 
 function resize() {
-    const dpr = window.devicePixelRatio || 1;
-
-    canvas.width = window.innerWidth * dpr;
-    canvas.height = window.innerHeight * dpr;
-
-    ctx.setTransform(1, 0, 0, 1, 0, 0); 
-    ctx.scale(dpr, dpr);
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 }
 window.addEventListener('resize', resize);
 resize();
 
 const particles = [];
-const particleCount = 800;
 
 function getFlowerPoint(t) {
     const k = 4;
-    const pulse = Math.sin(Date.now() * 0.003) * 0.15;
-    
-    // 🔥 CAMBIO DE TAMAÑO CLAVE:
-    // Al usar 0.35, hacemos la flor más compacta para que no se disperse.
-    const baseSize = Math.min(window.innerWidth, window.innerHeight) * 0.35; 
-    
+    const pulse = Math.sin(Date.now() * 0.003) * 0.1;
+    // Reducimos drásticamente el tamaño para móviles
+    const sizeFactor = window.innerWidth < 600 ? 0.25 : 0.35;
+    const baseSize = Math.min(window.innerWidth, window.innerHeight) * sizeFactor;
     const r = baseSize * Math.sin(k * t) * (1 + pulse);
-
-    const x = r * Math.cos(t);
-    const y = r * Math.sin(t);
-    return { x, y };
+    return { x: r * Math.cos(t), y: r * Math.sin(t) };
 }
 
 class Particle {
     constructor() {
         this.t = Math.random() * Math.PI * 2;
-        const point = getFlowerPoint(this.t);
         this.x = window.innerWidth / 2;
         this.y = window.innerHeight / 2;
-        this.targetX = window.innerWidth / 2 + point.x;
-        this.targetY = window.innerHeight / 2 + point.y;
-        this.size = Math.random() * 2.5 + 0.5;
-        this.speed = Math.random() * 0.015 + 0.005;
-        this.color = `hsl(${Math.random() * 30 + 260}, 90%, 70%)`;
+        // Puntos mucho más pequeños para que no se vea "gordo"
+        this.size = Math.random() * 1.5 + 0.2;
+        this.speed = Math.random() * 0.02 + 0.01;
+        this.color = `hsl(${Math.random() * 40 + 260}, 80%, 70%)`;
     }
-
     update() {
-        this.x += (this.targetX - this.x) * this.speed;
-        this.y += (this.targetY - this.y) * this.speed;
-
-        const point = getFlowerPoint(this.t);
-        this.targetX = window.innerWidth / 2 + point.x;
-        this.targetY = window.innerHeight / 2 + point.y;
+        const target = getFlowerPoint(this.t);
+        this.x += (window.innerWidth / 2 + target.x - this.x) * this.speed;
+        this.y += (window.innerHeight / 2 + target.y - this.y) * this.speed;
     }
-
     draw() {
         ctx.fillStyle = this.color;
         ctx.beginPath();
@@ -216,37 +134,19 @@ class Particle {
     }
 }
 
-for (let i = 0; i < particleCount; i++) {
-    particles.push(new Particle());
-}
+for (let i = 0; i < 600; i++) particles.push(new Particle());
 
 function animate() {
-    ctx.fillStyle = 'rgba(13,13,13,0.15)';
-    // Corregimos el escalado del rastro:
+    ctx.fillStyle = 'rgba(13, 13, 13, 0.2)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    particles.forEach(p => {
-        p.update();
-        p.draw();
-    });
-
+    particles.forEach(p => { p.update(); p.draw(); });
     requestAnimationFrame(animate);
 }
 animate();
 
-/* MODAL */
-const modal = document.getElementById("miModal");
-const btn = document.getElementById("btn-dedicatoria");
-const span = document.getElementById("closeModal");
-
-// Solo click, para evitar doble ejecución en móviles
-btn.onclick = () => modal.style.display = "flex";
-span.onclick = () => modal.style.display = "none";
-
-window.onclick = (event) => {
-    if (event.target == modal) modal.style.display = "none";
+document.getElementById("btn-dedicatoria").onclick = () => {
+    document.getElementById("miModal").style.display = "flex";
 };
 </script>
-
 </body>
 </html>

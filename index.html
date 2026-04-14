@@ -155,7 +155,7 @@ const particleCount = 800;
 function getFlowerPoint(t) {
     const k = 4;
     const pulse = Math.sin(Date.now() * 0.003) * 0.15;
-    const baseSize = Math.min(window.innerWidth, window.innerHeight) / 4;
+    const baseSize = Math.min(window.innerWidth, window.innerHeight) / 6;
     const r = baseSize * Math.sin(k * t) * (1 + pulse);
 
     const x = r * Math.cos(t);

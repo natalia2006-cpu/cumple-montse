@@ -139,8 +139,11 @@ const ctx = canvas.getContext('2d');
 
 function resize() {
     const dpr = window.devicePixelRatio || 1;
+
     canvas.width = window.innerWidth * dpr;
     canvas.height = window.innerHeight * dpr;
+
+    ctx.setTransform(1, 0, 0, 1, 0, 0); // 🔥 RESET
     ctx.scale(dpr, dpr);
 }
 window.addEventListener('resize', resize);
@@ -152,7 +155,8 @@ const particleCount = 800;
 function getFlowerPoint(t) {
     const k = 4;
     const pulse = Math.sin(Date.now() * 0.003) * 0.15;
-    const r = 250 * Math.sin(k * t) * (1 + pulse);
+    const baseSize = window.innerWidth < 600 ? 140 : 250;
+    const r = baseSize * Math.sin(k * t) * (1 + pulse);
 
     const x = r * Math.cos(t);
     const y = r * Math.sin(t);

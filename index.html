@@ -27,6 +27,11 @@ canvas {
     display: block;
     position: absolute;
     z-index: 1;
+    /* Ajuste para asegurar visibilidad total */
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
 }
 
 .mensaje {
@@ -41,6 +46,7 @@ canvas {
     animation: aparecer 3s ease-in forwards;
     animation-delay: 1.5s;
     pointer-events: none;
+    width: 90%;
 }
 
 /* Botón */
@@ -58,6 +64,7 @@ canvas {
     opacity: 0;
     animation: aparecerBoton 2s ease-in forwards;
     animation-delay: 6s;
+    cursor: pointer;
 }
 
 /* Modal */
@@ -92,6 +99,18 @@ canvas {
     right: 20px;
     color: #968fff;
     font-size: 24px;
+    cursor: pointer;
+}
+
+/* Ajustes específicos para móviles */
+@media (max-width: 600px) {
+    .mensaje {
+        font-size: 1.6rem;
+        top: 15%;
+    }
+    #btn-dedicatoria {
+        bottom: 10%;
+    }
 }
 
 /* Animaciones */
@@ -142,7 +161,7 @@ function resize() {
     canvas.width = window.innerWidth * dpr;
     canvas.height = window.innerHeight * dpr;
 
-    ctx.setTransform(1, 0, 0, 1, 0, 0); // 🔥 RESET
+    ctx.setTransform(1, 0, 0, 1, 0, 0); 
     ctx.scale(dpr, dpr);
 }
 window.addEventListener('resize', resize);
@@ -154,7 +173,10 @@ const particleCount = 800;
 function getFlowerPoint(t) {
     const k = 4;
     const pulse = Math.sin(Date.now() * 0.003) * 0.15;
-    const baseSize = Math.min(window.innerWidth, window.innerHeight) / 4;
+    
+    // Ajuste de tamaño para que no se corte en móviles (35% del lado menor)
+    const baseSize = Math.min(window.innerWidth, window.innerHeight) * 0.35; 
+    
     const r = baseSize * Math.sin(k * t) * (1 + pulse);
 
     const x = r * Math.cos(t);
@@ -198,7 +220,7 @@ for (let i = 0; i < particleCount; i++) {
 
 function animate() {
     ctx.fillStyle = 'rgba(13,13,13,0.15)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
     particles.forEach(p => {
         p.update();
@@ -214,18 +236,10 @@ const modal = document.getElementById("miModal");
 const btn = document.getElementById("btn-dedicatoria");
 const span = document.getElementById("closeModal");
 
-/* 🔥 CLICK + TOUCH */
 btn.onclick = () => modal.style.display = "flex";
-btn.ontouchstart = () => modal.style.display = "flex";
-
 span.onclick = () => modal.style.display = "none";
-span.ontouchstart = () => modal.style.display = "none";
 
 window.onclick = (event) => {
-    if (event.target == modal) modal.style.display = "none";
-};
-
-window.ontouchstart = (event) => {
     if (event.target == modal) modal.style.display = "none";
 };
 </script>

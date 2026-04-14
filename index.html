@@ -12,12 +12,16 @@
         background: #0d0d0d;
         display: flex;
         flex-direction: column;
-        justify-content: center; /* Centra el contenido verticalmente */
+        /* Esto distribuye el texto arriba y el botón abajo */
+        justify-content: space-between; 
         align-items: center;
         height: 100vh;
         width: 100vw;
         font-family: 'Arial', sans-serif;
         touch-action: none;
+        padding-top: 60px; /* Espacio para el texto */
+        padding-bottom: 60px; /* Espacio para el botón */
+        box-sizing: border-box;
     }
     canvas {
         display: block;
@@ -29,7 +33,7 @@
         z-index: 1;
     }
     .mensaje {
-        position: relative; /* Cambiado a relativo para que fluya en el centro */
+        position: relative;
         z-index: 2;
         color: #968fff;
         font-size: 1.8rem; 
@@ -40,14 +44,12 @@
         opacity: 0;
         animation: aparecer 3s ease-in forwards;
         pointer-events: none;
-        margin-bottom: 20px; /* Separación de la flor */
     }
     #btn-dedicatoria {
-        position: absolute;
-        bottom: 10%;
+        position: relative; /* Cambiado a relativo para que respete el espacio */
         z-index: 3;
         padding: 12px 30px;
-        background: transparent;
+        background: rgba(13, 13, 13, 0.5); /* Fondo semitransparente por si toca pétalos */
         color: #968fff;
         border: 2px solid #968fff;
         border-radius: 50px;
@@ -58,7 +60,7 @@
         animation-delay: 4s;
         cursor: pointer;
     }
-    /* Estilos del Modal (Igual que antes) */
+    /* Modal */
     .modal {
         display: none;
         position: fixed;
@@ -90,16 +92,7 @@
 <div id="miModal" class="modal">
     <div class="modal-content">
         <h2 style="color: #968fff;">Para Montse 🌸</h2>
-        <p>Tranquila, no me voy a poner muy cursie jajajaja.<br><br>
-            Te quería hacer este detalle a parte de felicitarte por tu cumpleaños, 
-            para agradecerte todos estos días atrás en los que en la oficina me ofrecías cosas 
-            y me ayudabas a estar más agusto allí (soy muy vergonzosa jajajaj) y aunque hubera veces en
-            las que estaba concentrada o aburrida siempre me decías cosillas y me alegraba mucho. 
-              Asique nada, no me enrollo más y... 
-                ¡Feliz cumpleaños! (Un poco atrasado jajajaj)</p>
-         <p style="margin-top: 40px; font-size: 1rem; font-style: italic; color: #cc54fc;">
-                Espero que te guste
-         </p>
+        <p>Tranquila, no me voy a poner muy cursie jajajaja.<br><br>Te quería agradecer por hacerme sentir agusto en la oficina. ¡Feliz cumpleaños!</p>
         <button onclick="document.getElementById('miModal').style.display='none'" style="background:none; border:none; color:#968fff; margin-top:20px; font-weight:bold; font-size: 1.1rem;">Cerrar</button>
     </div>
 </div>
@@ -120,11 +113,8 @@ const particles = [];
 function getFlowerPoint(t) {
     const k = 4;
     const pulse = Math.sin(Date.now() * 0.003) * 0.12;
-    
-    // 🔥 TAMAÑO EQUILIBRADO:
-    // 0.38 es el punto dulce para que se vea grande pero no se corte
-    const baseSize = Math.min(window.innerWidth, window.innerHeight) * 0.38;
-    
+    // Mantenemos el tamaño de la captura anterior que te gustó
+    const baseSize = Math.min(window.innerWidth, window.innerHeight) * 0.35;
     const r = baseSize * Math.sin(k * t) * (1 + pulse);
     return { x: r * Math.cos(t), y: r * Math.sin(t) };
 }
@@ -134,16 +124,15 @@ class Particle {
         this.t = Math.random() * Math.PI * 2;
         this.x = window.innerWidth / 2;
         this.y = window.innerHeight / 2;
-        this.size = Math.random() * 2 + 0.5; // Partículas un poco más visibles
+        this.size = Math.random() * 2 + 0.5;
         this.speed = Math.random() * 0.015 + 0.005;
         this.color = `hsl(${Math.random() * 40 + 260}, 85%, 75%)`;
     }
     update() {
         const target = getFlowerPoint(this.t);
-        // 🔥 CENTRO PERFECTO:
-        // La centramos totalmente para que el texto y ella bailen juntos
+        // 🔥 CENTRADO ABSOLUTO DE LA FLOR
         this.x += (window.innerWidth * 0.5 + target.x - this.x) * this.speed;
-        this.y += (window.innerHeight * 0.55 + target.y - this.y) * this.speed;
+        this.y += (window.innerHeight * 0.5 + target.y - this.y) * this.speed;
     }
     draw() {
         ctx.fillStyle = this.color;

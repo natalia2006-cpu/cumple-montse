@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
 
 <title>¡Felicidades Montse! 🌸</title>
 
@@ -17,9 +17,8 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    height: -webkit-fill-available; /* Ajuste para iOS */
     font-family: 'Arial', sans-serif;
-
-    /* 🔥 Mejora táctil */
     touch-action: none;
 }
 
@@ -27,7 +26,7 @@ canvas {
     display: block;
     position: absolute;
     z-index: 1;
-    /* Ajuste para asegurar visibilidad total */
+    /* Ajuste para asegurar visibilidad total y escalado */
     width: 100vw;
     height: 100vh;
     top: 0;
@@ -102,14 +101,16 @@ canvas {
     cursor: pointer;
 }
 
-/* Ajustes específicos para móviles */
+/* 🔥 AJUSTES PARA MÓVILES (Media Query) 🔥 */
+/* Estos cambios son cruciales para que se vea igual que en tu captura */
 @media (max-width: 600px) {
     .mensaje {
-        font-size: 1.6rem;
-        top: 15%;
+        font-size: 1.6rem; /* Texto más pequeño */
+        top: 18%; /* Posición más alta para dejar espacio a la flor */
+        transform: translateY(0);
     }
     #btn-dedicatoria {
-        bottom: 10%;
+        bottom: 8%; /* Botón más abajo */
     }
 }
 
@@ -174,7 +175,8 @@ function getFlowerPoint(t) {
     const k = 4;
     const pulse = Math.sin(Date.now() * 0.003) * 0.15;
     
-    // Ajuste de tamaño para que no se corte en móviles (35% del lado menor)
+    // 🔥 CAMBIO DE TAMAÑO CLAVE:
+    // Al usar 0.35, hacemos la flor más compacta para que no se disperse.
     const baseSize = Math.min(window.innerWidth, window.innerHeight) * 0.35; 
     
     const r = baseSize * Math.sin(k * t) * (1 + pulse);
@@ -220,7 +222,8 @@ for (let i = 0; i < particleCount; i++) {
 
 function animate() {
     ctx.fillStyle = 'rgba(13,13,13,0.15)';
-    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+    // Corregimos el escalado del rastro:
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     particles.forEach(p => {
         p.update();
@@ -236,6 +239,7 @@ const modal = document.getElementById("miModal");
 const btn = document.getElementById("btn-dedicatoria");
 const span = document.getElementById("closeModal");
 
+// Solo click, para evitar doble ejecución en móviles
 btn.onclick = () => modal.style.display = "flex";
 span.onclick = () => modal.style.display = "none";
 
